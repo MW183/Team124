@@ -1,0 +1,6 @@
+{
+    "workbench.colorTheme": "Darcula from Pycharm (Dark)",
+    "editor.tokenColorCustomizations": {
+        "comments": "#11770d"
+    }
+}
