@@ -16,7 +16,7 @@ mdiff.gyro.calibrate()
 distance_cm = float(input("Distance (cm) >>"))
 distance_mm = distance_cm * 10 
 speed = int(input("Speed [-100, 100] >> "))
-num_turn = int("Turn by 90° >> ")
+num_turn = int(input("Turn by 90 >> "))
 
 degrees_to_turn = 90 * num_turn
 
@@ -25,4 +25,4 @@ for i in range(1):
     # MOVEDIFFERENTIAL.on_for_distance(SPEED, DISTANCE_MM, BRAKE)
     # MOVEDIFFERENTIAL.turn_degrees(speed, degrees, brake, error, gyro)
     mdiff.on_for_distance(speed, distance_mm)
-    mdiff.turn_degrees(speed * 0.7, num_turn, error_margin=1, use_gyro=True)
+   # mdiff.turn_degrees(speed * 0.7, num_turn, error_margin=1, use_gyro=True)
