@@ -8,17 +8,17 @@ def main():
     
     mdiff = MoveDifferential(OUTPUT_B, OUTPUT_A, EV3EducationSetTire, 6.1*25.4)
     mdiff.gyro = GyroSensor(INPUT_1)
-
+    distance_in2 = int(input("Enter the number of inches >> "))
 
     mdiff.gyro.reset()
     mdiff.gyro.calibrate()
 
     distance_in = 12
     distance_mm1 = distance_in * 25.4 
-    distance_in2 = int(input("Enter the number of inches >> "))
+    
     distance_mm2 = distance_in2 * 25.4
     speed = 30
-    degrees_to_turn = 90 * 0.946 #adjustment factor
+    degrees_to_turn = 90 * 0.88 #adjustment factor
 
 
 
@@ -27,4 +27,6 @@ def main():
     mdiff.on_for_distance(speed, distance_mm1)
     mdiff.turn_left(speed * 0.7, degrees_to_turn)
     mdiff.on_for_distance(speed, distance_mm2)
+    #drift is 5-10% -Y
+    #drift is <1% -X
 main()
