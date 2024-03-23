@@ -65,7 +65,7 @@ def move_robot_to_box(target_x, target_y, box_number):
     
     move_horizontal(target_x)
     orientation_degrees = apply_turn_error(orientation_degrees)
-    move_vertical(target_y))
+    move_vertical(target_y)
     print(f"{robot_x}, {robot_y}")
 userinput = input("Enter a shelf and box number seperated by an underscore (I.E. A1_1) >> ")
 splituserinput = userinput.split("_")
