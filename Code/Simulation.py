@@ -68,9 +68,18 @@ def move_robot_to_box(target_x, target_y, box_number):
         adj_target_y = target_y + drift
         robot_y = adj_target_y
     
-    def turn(target_orient):
-        nonlocal current_orient
-        current_orient = target_orient + turn_error_degrees
+    move_horizontal(target_x)
+    orientation_degrees = apply_turn_error(orientation_degrees)
+    move_vertical(target_y)
+    print(f"{robot_x}, {robot_y}")
+userinput = input("Enter a shelf and box number seperated by an underscore (I.E. A1_1) >> ")
+splituserinput = userinput.split("_")
+shelf_number = (splituserinput[0])
+box_number = int(splituserinput[1])
+x_start, x_end, y_edge = get_box_coordinates(shelf_number, box_number)
+target_x = x_start - 3
+target_y = y_edge - 3
+move_robot_to_box(target_x, target_y, box_number)
 
     move_vertical(target_y)
     turn(90)
