@@ -5,11 +5,13 @@ box_y = 6 * conversion_factor
 shelf_x = 36 * conversion_factor
 shelf_y = 12 * conversion_factor
 shelf_spacing = 12 * conversion_factor
+
 def is_on_top(box_number):
     if box_number >= 7:
         return True
     else: 
         return False
+
 def get_box_coordinates(shelf_label, box_number):
     #store each row
     row_dict = {'A1': 0, 'B1': 0, 'A2': 1, 'B2': 1, 'C1': 2, 'D1': 2, 'C2': 3, 'D2': 3}
@@ -77,7 +79,6 @@ def move_robot_to_box(target_x, target_y, box_number):
     print(f"{round(robot_x, 2)}, {round(robot_y, 2)}")
 
 def main():
-
     userinput = input("Enter a shelf and box number seperated by an underscore (I.E. A1_1) >> ")
     splituserinput = userinput.split("_")
     shelf_number = (splituserinput[0])
