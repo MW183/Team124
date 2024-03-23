@@ -40,20 +40,23 @@ def get_box_coordinates(shelf_label, box_number):
 
 
 def main():
-    rawinput = input("Enter shelf number, box number, barcode, and destination seperated by an underscore (I.E. A1_1, 1, C) >> ")
-    split_by_comma = rawinput.split(",")
-    split_input_str = [element.strip() for element in split_by_comma]
+    rawinput = input("Enter shelf number, box number, barcode, and destination separated by an underscore (I.E. A1_1, 1, C) >> ")
+    # Splitting the input by commas and stripping spaces in one step
+    split_input = [element.strip() for element in rawinput.split(",")]
+
+    # Further splitting the first element by underscore for shelf and box
+    shelf_number, box_number = split_input[0].split("_")
+
+    # Directly accessing barcode and destination from the split_input list
+    barcode = split_input[1]
+    destination = split_input[2]
+
+    # Converting box_number to int
+    box_number = int(box_number)
+
+    # Optionally printing the values
+    #print(f"{shelf_number}, {box_number}, {barcode}, {destination}")
     
-    shelf_and_box = split_by_comma[0]
-    barcode = split_by_comma[1]
-    destination = split_by_comma[2]
-    
-    shelf_and_box_lst = shelf_and_box.split("_")
-    
-    shelf_number = (shelf_and_box_lst[0])
-    box_number = int(shelf_and_box_lst[1])
-    
-    print(f"{shelf_number}, {box_number}, {barcode}, {destination}")
     x_box_start, y_edge = get_box_coordinates(shelf_number, box_number)
     x_box_start = x_box_start - (6*conversion_factor)
     y_edge = y_edge + (6*conversion_factor)
