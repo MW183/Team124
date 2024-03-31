@@ -9,6 +9,18 @@ import math
 color_sensor = ColorSensor(INPUT_1)
 color_sensor.calibrate_white()
 
+
+def barcode_reading(barcode_type, near = false)
+    barcode_dict = (1:'1666', 2:'1616',3:'1166',4:'1661') 
+    color = '0000'
+    if near == true:
+        for i in range(len(color)):
+            color[i] = color[i] + color_sensor
+            i = i + 1
+    if color != '0000' && color == barcode_dict[barcode_type]
+        return color
+    
+
 #loop??/bool
 boxtype1=0
 boxtype2=0
@@ -33,3 +45,15 @@ else:
     #move like normal?
 
 #i have it so it keeps pausing i think
+    
+#black = 1, white = 6
+def barcode_reading(barcode_type, near = false):
+    barcode_dict = {1 : "1666", 2:"1616", 3:"1166", 4:"1661"}
+    color = "0000"
+    if near == true:
+        for i in range(len(color):
+            color[i] += color_sensor
+            #move forward 0.5in
+            i++ 
+    if color != "0000" && color == barcode_dict[barcode_type]
+        return color
