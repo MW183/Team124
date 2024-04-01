@@ -35,6 +35,8 @@ def get_box_coordinates(shelf_label, box_number):
     
     # The accessible edge y coordinate (bottom or top edge of the box)
     y_edge_box = y_start_shelf + shelf_y if is_on_top(box_number) else y_start_shelf
+    x_start_box = x_start_box - (6*conversion_factor)
+    y_edge_box = y_edge_box + (6*conversion_factor)
     print(f"{round(x_start_box, 2)}, {round(y_edge_box, 2)}")
     return x_start_box, y_edge_box
 
@@ -53,11 +55,6 @@ def main():
 
     # Converting box_number to int
     box_number = int(box_number)
-
-    # Optionally printing the values
-    #print(f"{shelf_number}, {box_number}, {barcode}, {destination}")
     
-    x_box_start, y_edge = get_box_coordinates(shelf_number, box_number)
-    x_box_start = x_box_start - (6*conversion_factor)
-    y_edge = y_edge + (6*conversion_factor)
+    get_box_coordinates(shelf_number, box_number)    
 main()
