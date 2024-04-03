@@ -65,7 +65,7 @@ def get_user_input():
     return shelf_label, box_number, barcode, destination
 
 def straight(time):
-    tank.gyro.calibrate()
+    tank.gyro.reset()
     tank.follow_gyro_angle(kp, ki, kd, speed=SpeedRPS(RPS), target_angle=0, follow_for=follow_for_ms, ms=time)
 
 def turn_left():
@@ -130,3 +130,6 @@ def main():
     move_box_to_destination(current_x, current_y, destination)
 
 main()
+
+# cd ./Team124/Code
+# brickrun -r ./PID_movement.py
