@@ -30,6 +30,8 @@ def is_on_top(box_number):
     return box_number >= 7
 
 def get_box_coordinates(shelf_label, box_number):
+    y_offset =  6 * conversion_factor
+    x_offset = 6 * conversion_factor
     box_x = 4 * conversion_factor
     box_x_gap = 2 * conversion_factor
     box_y = 6 * conversion_factor
@@ -44,10 +46,11 @@ def get_box_coordinates(shelf_label, box_number):
     y_start_shelf = shelf_spacing + (row * (shelf_y + shelf_spacing))
     if is_on_top(box_number):
         x_start_box = x_start_shelf + ((box_number - 7) * (box_x + box_x_gap)) + (1 * conversion_factor)
+        y_offset *= -1
     else:
         x_start_box = x_start_shelf + ((box_number - 1) * (box_x + box_x_gap)) + (1 * conversion_factor)
     y_edge_box = y_start_shelf + shelf_y if is_on_top(box_number) else y_start_shelf
-    return [x_start_box, y_edge_box]
+    return [x_start_box - x_offset, y_edge_box - y_offset]
 
 def get_end_coordinates(destination):
     if destination == "B":
@@ -82,12 +85,11 @@ def turn_left():
 def turn_right():
     tank.turn_right(SpeedRPS(RPS), 90)
 
-disp = Display()
-color_sensor = ColorSensor(INPUT_1)
-color_sensor.calibrate_white()
-'''will write each box as a certain code combo: ex. A1 = 1666'''
+def turn_around():
+    tank.turn_right(SpeedRPS(RPS), 180)
 
 def barcode_reading(barcode_type, near = False):
+    '''will write each box as a certain code combo: ex. A1 = 1666'''
     #COLOR_BLACK = 1
     #COLOR_WHITE = 6
     barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
@@ -113,9 +115,8 @@ def barcode_reading(barcode_type, near = False):
             sleep(5)
 
 
-def move_robot_to_box(shelf_label, box_number):
-    # Calculate target coordinates
-
+def move_robot_to_box(shelf_label, box_number, barcode_type):
+    near = False
     # Calculate distances to move
     start_x, start_y = 6 * conversion_factor, -6 * conversion_factor
     target_x, target_y = get_box_coordinates(shelf_label, box_number)
@@ -124,7 +125,7 @@ def move_robot_to_box(shelf_label, box_number):
 
     # Move in +y direction
     distance_y = target_y - start_y
-    if distance_y > 12:
+    if distance_y > 12 * conversion_factor:
         time_y = distance_to_time(distance_y)
         straight(time_y)
         current_y += distance_y 
@@ -142,11 +143,16 @@ def move_robot_to_box(shelf_label, box_number):
     turn_right() if is_on_top(box_number) else turn_left()
     
     #Here we need to add in something to read the barcode, grab the box, and then turn in the opposite direction so we are oriented facing in the +y direction
-    if (barcode_reading(1,True)):
-        print('barcode_match')
-    else:
-        print('barcode_no_match')
+    while (straight(350)):
+        if (barcode_reading(barcode_type, True)):
+            print('barcode_match')
+        else:
+            print('barcode_no_match')
 
+    #reorient up IT IS REPEATED TWICE ON PURPOSE
+    if is_on_top(box_number): 
+        turn_around
+    
     return current_x, current_y
 def move_box_to_destination(current_x, current_y, destination):
     target_x, target_y = get_end_coordinates(destination)
@@ -168,8 +174,8 @@ def move_box_to_destination(current_x, current_y, destination):
     return current_x, current_y
 
 def main():
-    shelf_label, box_number, barcode, destination = get_user_input()
-    current_x, current_y = move_robot_to_box(shelf_label, box_number)
+    shelf_label, box_number, barcode_type, destination = get_user_input()
+    current_x, current_y = move_robot_to_box(shelf_label, box_number, barcode_type)
     move_box_to_destination(current_x, current_y, destination)
 
 main()
