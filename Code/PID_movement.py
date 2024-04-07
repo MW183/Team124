@@ -142,7 +142,7 @@ def move_robot_to_box(shelf_label, box_number):
     turn_right() if is_on_top(box_number) else turn_left()
     
     #Here we need to add in something to read the barcode, grab the box, and then turn in the opposite direction so we are oriented facing in the +y direction
-    if (barcode_reading(1,True)):
+    if (barcode_reading(box_number,True)):
         print('barcode_match')
     else:
         print('barcode_no_match')
