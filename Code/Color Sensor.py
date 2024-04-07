@@ -12,8 +12,8 @@ disp = Display()
 color_sensor = ColorSensor(INPUT_1)
 color_sensor.calibrate_white()
 '''will write each box as a certain code combo: ex. A1 = 1666'''
-COLOR_BLACK = 1
-COLOR_WHITE = 6
+#COLOR_BLACK = 1
+#COLOR_WHITE = 6
 
 barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
 def barcode_reading(barcode_type, near = False):
@@ -21,8 +21,10 @@ def barcode_reading(barcode_type, near = False):
     if near == True:
         for i in range(len(barcode_dict[barcode_type])):
             for k in (1, i):
-#NOT DONE HERE
-            color = color + str(color_sensor.COLOR)
+                if color_sensor == color_sensor.COLOR_BLACK:
+                    color = color + str(color_sensor.COLOR_BLACK)
+                elif color_sensor == color_sensor.COLOR_WHITE:
+                    color = color + str(color_sensor.COLOR_WHITE)
     if color == barcode_dict[barcode_type]:
         return color
     if near == True:
