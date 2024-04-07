@@ -6,18 +6,20 @@ from ev3dev2.motor import OUTPUT_A, OUTPUT_B, MoveTank
 import time 
 import math
 from ev3dev2.display import Display
+from PID_movement import *
+from ev3dev2.motor import OUTPUT_D, MoveTank, SpeedRPS, MediumMotor, SpeedPercent
 
 
 disp = Display()
 color_sensor = ColorSensor(INPUT_1)
 color_sensor.calibrate_white()
 '''will write each box as a certain code combo: ex. A1 = 1666'''
-#COLOR_BLACK = 1
-#COLOR_WHITE = 6
 
-barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
 def barcode_reading(barcode_type, near = False):
-    color = '0000'
+    #COLOR_BLACK = 1
+    #COLOR_WHITE = 6
+    barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
+    color = ''
     if near == True:
         for i in range(len(barcode_dict[barcode_type])):
             for k in (1, i):
@@ -25,17 +27,23 @@ def barcode_reading(barcode_type, near = False):
                     color = color + str(color_sensor.COLOR_BLACK)
                 elif color_sensor == color_sensor.COLOR_WHITE:
                     color = color + str(color_sensor.COLOR_WHITE)
+                straight(distance_to_time(1/2))
     if color == barcode_dict[barcode_type]:
-        return color
+        return True
     if near == True:
         if barcode_type != color:
-            disp.text_pixels(input("This is not the box"),x=0,y=64)
+            disp.text_pixels(("This is not the box"),x=0,y=64)
             disp.update()
             time.sleep(5)
         elif barcode_type == color:
             disp.text_pixels("This is the box",x=0,y=64)
             disp.update()
             time.sleep(5)
+if (barcode_reading(1,True)):
+    print('barcode_match')
+else:
+    print('barcode_no_match')
+
 
 '''boxtype1=0
 boxtype2=0

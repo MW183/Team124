@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, MoveTank, SpeedRPS, follow_for_ms
 from ev3dev2.sensor.lego import GyroSensor
+from ev3dev2.sensor.lego import ColorSensor
+from ev3dev2.display import Display
+from ev3dev2.sensor import INPUT_1
+from time import sleep
 
 # Initialization
 tank = MoveTank(OUTPUT_B, OUTPUT_A)  # left, right
 tank.gyro = GyroSensor()
 tank.gyro.calibrate()
+
+disp = Display()
+color_sensor = ColorSensor(INPUT_1)
+color_sensor.calibrate_white()
 
 # PID constants
 kp = 10.0  # determines aggressiveness in corrections, can cause oscillations
@@ -74,6 +82,37 @@ def turn_left():
 def turn_right():
     tank.turn_right(SpeedRPS(RPS), 90)
 
+disp = Display()
+color_sensor = ColorSensor(INPUT_1)
+color_sensor.calibrate_white()
+'''will write each box as a certain code combo: ex. A1 = 1666'''
+
+def barcode_reading(barcode_type, near = False):
+    #COLOR_BLACK = 1
+    #COLOR_WHITE = 6
+    barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
+    color = ''
+    if near == True:
+        for i in range(len(barcode_dict[barcode_type])):
+            for k in (1, i):
+                if color_sensor == color_sensor.COLOR_BLACK:
+                    color = color + str(color_sensor.COLOR_BLACK)
+                elif color_sensor == color_sensor.COLOR_WHITE:
+                    color = color + str(color_sensor.COLOR_WHITE)
+                straight(distance_to_time(1/2))
+    if color == barcode_dict[barcode_type]:
+        return True
+    if near == True:
+        if barcode_type != color:
+            disp.text_pixels(("This is not the box"),x=0,y=64)
+            disp.update()
+            sleep(5)
+        elif barcode_type == color:
+            disp.text_pixels("This is the box",x=0,y=64)
+            disp.update()
+            sleep(5)
+
+
 def move_robot_to_box(shelf_label, box_number):
     # Calculate target coordinates
 
@@ -103,7 +142,11 @@ def move_robot_to_box(shelf_label, box_number):
     turn_right() if is_on_top(box_number) else turn_left()
     
     #Here we need to add in something to read the barcode, grab the box, and then turn in the opposite direction so we are oriented facing in the +y direction
-    
+    if (barcode_reading(1,True)):
+        print('barcode_match')
+    else:
+        print('barcode_no_match')
+
     return current_x, current_y
 def move_box_to_destination(current_x, current_y, destination):
     target_x, target_y = get_end_coordinates(destination)
