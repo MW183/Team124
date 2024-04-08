@@ -1,10 +1,8 @@
-#Color Sensor
 #!/usr/bin/env python3
 from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.sensor import INPUT_1
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, MoveTank
 import time 
-import math
 from ev3dev2.display import Display
 from PID_movement import *
 from ev3dev2.motor import OUTPUT_D, MoveTank, SpeedRPS, MediumMotor, SpeedPercent
@@ -22,12 +20,10 @@ def barcode_reading(barcode_type, near = False):
     color = ''
     if near == True:
         for i in range(len(barcode_dict[barcode_type])):
-            for k in (1, i):
-                if color_sensor == color_sensor.COLOR_BLACK:
-                    color = color + str(color_sensor.COLOR_BLACK)
-                elif color_sensor == color_sensor.COLOR_WHITE:
-                    color = color + str(color_sensor.COLOR_WHITE)
-                straight(distance_to_time(1/2))
+            color += str(color_sensor.color)
+            straight(distance_to_time(.75*25.4)) #.75 needs to go back to .5 in but *conversion factor
+            sleep(0.5)
+            print(color)
     if color == barcode_dict[barcode_type]:
         return True
     if near == True:
@@ -39,29 +35,10 @@ def barcode_reading(barcode_type, near = False):
             disp.text_pixels("This is the box",x=0,y=64)
             disp.update()
             time.sleep(5)
-if (barcode_reading(1,True)):
+    return False
+
+if (barcode_reading(1, True)):
     print('barcode_match')
 else:
     print('barcode_no_match')
 
-
-'''boxtype1=0
-boxtype2=0
-boxtype3=0
-boxtype4=0
-
-if color_sensor.COLOR_BLACK:
-    if color_sensor.COLOR_WHITE:
-        if color_sensor.COLOR_BLACK:
-            if color_sensor.COLOR_BLACK:
-                boxtype2=1
-        elif color_sensor.COLOR_WHITE:
-            if color_sensor.COLOR_WHITE:
-                boxtype1=1
-            elif color_sensor.COLOR_BLACK:
-                boxtype4=1
-    elif color_sensor.COLOR_BLACK:
-        if color_sensor.COLOR_WHITE:
-            if color_sensor.COLOR_WHITE:
-                boxtype3=1
-'''

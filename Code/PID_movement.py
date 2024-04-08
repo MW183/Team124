@@ -22,7 +22,7 @@ kd = 3.0  # dampens the system response to oscillations
 RPS = 1  # rotations per second
 
 # Constants for measurements
-conversion_factor = 25.4  # mm in an inch
+conversion_factor =  25.4  # mm in an inch
 
 
 # Functions
@@ -77,7 +77,7 @@ def get_user_input():
 
 def straight(time):
     tank.gyro.reset()
-    tank.follow_gyro_angle(kp, ki, kd, speed=SpeedRPS(RPS), target_angle=0, follow_for=follow_for_ms, ms=time)
+    tank.follow_gyro_angle(kp, ki, kd, speed=SpeedRPS(.5*RPS), target_angle=0, follow_for=follow_for_ms, ms=time*2)
 
 def turn_left():
     tank.turn_left(SpeedRPS(RPS), 90)
@@ -178,7 +178,7 @@ def main():
     current_x, current_y = move_robot_to_box(shelf_label, box_number, barcode_type)
     move_box_to_destination(current_x, current_y, destination)
 
-main()
+#main()
 
 # cd ./Team124/Code
 # brickrun -r ./PID_movement.py
