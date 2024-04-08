@@ -11,7 +11,9 @@ sound.beep()
 medMotor = MediumMotor(OUTPUT_D)
 medMotor.reset()
 
-medMotor.on_to_position(SpeedPercent(100), -45)
+medMotor.on_to_position(SpeedPercent(100), 0)
+time.sleep(5)
+medMotor.on_to_position(SpeedPercent(100), 180)
 time.sleep(5)
 medMotor.on_to_position(SpeedPercent(100), 0)
 
