@@ -178,7 +178,7 @@ def main():
     current_x, current_y = move_robot_to_box(shelf_label, box_number, barcode_type)
     move_box_to_destination(current_x, current_y, destination)
 
-#main()
+main()
 
 # cd ./Team124/Code
 # brickrun -r ./PID_movement.py

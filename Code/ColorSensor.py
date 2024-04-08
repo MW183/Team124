@@ -20,7 +20,10 @@ def barcode_reading(barcode_type, near = False):
     color = ''
     if near == True:
         for i in range(len(barcode_dict[barcode_type])):
-            color += str(color_sensor.color)
+            if (color_sensor.reflected_light_intensity <= 15):
+                color += str(1)
+            elif (color_sensor.reflected_light_intensity >15):
+                color += str(6)
             straight(distance_to_time(.75*25.4)) #.75 needs to go back to .5 in but *conversion factor
             sleep(0.5)
             print(color)
@@ -37,7 +40,7 @@ def barcode_reading(barcode_type, near = False):
             time.sleep(5)
     return False
 
-if (barcode_reading(1, True)):
+if (barcode_reading(3, True)):
     print('barcode_match')
 else:
     print('barcode_no_match')
