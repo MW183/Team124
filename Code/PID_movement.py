@@ -89,19 +89,19 @@ def turn_around():
     tank.turn_right(SpeedRPS(RPS), 180)
 
 def barcode_reading(barcode_type, near = False):
-    '''will write each box as a certain code combo: ex. A1 = 1666'''
     #COLOR_BLACK = 1
     #COLOR_WHITE = 6
     barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
     color = ''
     if near == True:
         for i in range(len(barcode_dict[barcode_type])):
-            for k in (1, i):
-                if color_sensor == color_sensor.COLOR_BLACK:
-                    color = color + str(color_sensor.COLOR_BLACK)
-                elif color_sensor == color_sensor.COLOR_WHITE:
-                    color = color + str(color_sensor.COLOR_WHITE)
-                straight(distance_to_time(1/2))
+            if (color_sensor.reflected_light_intensity <= 15):
+                color += str(1)
+            elif (color_sensor.reflected_light_intensity >15):
+                color += str(6)
+            straight(distance_to_time(.75*25.4)) #.75 needs to go back to .5 in but *conversion factor
+            sleep(0.5)
+            print(color)
     if color == barcode_dict[barcode_type]:
         return True
     if near == True:
@@ -113,7 +113,12 @@ def barcode_reading(barcode_type, near = False):
             disp.text_pixels("This is the box",x=0,y=64)
             disp.update()
             sleep(5)
+    return False
 
+#if (barcode_reading(3, True)):
+#    print('barcode_match')
+#else:
+#    print('barcode_no_match')
 
 def move_robot_to_box(shelf_label, box_number, barcode_type):
     near = False
@@ -178,7 +183,7 @@ def main():
     current_x, current_y = move_robot_to_box(shelf_label, box_number, barcode_type)
     move_box_to_destination(current_x, current_y, destination)
 
-main()
+#main()
 
 # cd ./Team124/Code
 # brickrun -r ./PID_movement.py
