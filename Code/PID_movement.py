@@ -87,7 +87,7 @@ def turn_right():
 
 def turn_around():
     tank.turn_right(SpeedRPS(RPS), 180)
-'''
+
 def barcode_reading(barcode_type, near = False):
     #COLOR_BLACK = 1
     #COLOR_WHITE = 6
@@ -144,7 +144,7 @@ def move_robot_to_box(shelf_label, box_number, barcode_type):
     turn_right() if is_on_top(box_number) else turn_left()
     
     #Here we need to add in something to read the barcode, grab the box, and then turn in the opposite direction so we are oriented facing in the +y direction
-    straight(350)
+    '''straight(350)
     if (barcode_reading(barcode_type, True)):
         print('barcode_match')
     else:
@@ -153,7 +153,7 @@ def move_robot_to_box(shelf_label, box_number, barcode_type):
     #reorient up IT IS REPEATED TWICE ON PURPOSE
     if is_on_top(box_number): 
         turn_around
-    
+    '''
     return current_x, current_y
 '''def move_box_to_destination(current_x, current_y, destination):
     target_x, target_y = get_end_coordinates(destination)
@@ -177,7 +177,7 @@ def move_robot_to_box(shelf_label, box_number, barcode_type):
 def main():
     shelf_label, box_number, barcode_type, destination = get_user_input()
     current_x, current_y = move_robot_to_box(shelf_label, box_number, barcode_type)
-    #move_box_to_destination(current_x, current_y, destination)
+    ##move_box_to_destination(current_x, current_y, destination)
 
 main()
 
