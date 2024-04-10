@@ -50,7 +50,7 @@ def get_box_coordinates(shelf_label, box_number):
     else:
         x_start_box = x_start_shelf + ((box_number - 1) * (box_x + box_x_gap)) + (1 * conversion_factor)
     y_edge_box = y_start_shelf + shelf_y if is_on_top(box_number) else y_start_shelf
-    return [x_start_box - x_offset, y_edge_box - y_offset]
+    return x_start_box, y_edge_box
 
 def get_end_coordinates(destination):
     if destination == "B":
@@ -77,7 +77,7 @@ def get_user_input():
 
 def straight(time):
     tank.gyro.reset()
-    tank.follow_gyro_angle(kp, ki, kd, speed=SpeedRPS(RPS), target_angle=0, follow_for=follow_for_ms, ms=time)
+    tank.follow_gyro_angle(kp, ki, kd, SpeedRPS(RPS), target_angle=0, follow_for=follow_for_ms, ms=time)
 
 def turn_left():
     tank.turn_left(SpeedRPS(RPS), 90)
@@ -87,7 +87,7 @@ def turn_right():
 
 def turn_around():
     tank.turn_right(SpeedRPS(RPS), 180)
-
+'''
 def barcode_reading(barcode_type, near = False):
     #COLOR_BLACK = 1
     #COLOR_WHITE = 6
@@ -114,7 +114,7 @@ def barcode_reading(barcode_type, near = False):
             disp.update()
             sleep(5)
     return False
-
+'''
 
 def move_robot_to_box(shelf_label, box_number, barcode_type):
     near = False
@@ -155,7 +155,7 @@ def move_robot_to_box(shelf_label, box_number, barcode_type):
         turn_around
     
     return current_x, current_y
-def move_box_to_destination(current_x, current_y, destination):
+'''def move_box_to_destination(current_x, current_y, destination):
     target_x, target_y = get_end_coordinates(destination)
     distance_x, distance_y = target_x - current_x, target_y - current_y
     time_x = distance_to_time(distance_x)
@@ -173,11 +173,11 @@ def move_box_to_destination(current_x, current_y, destination):
     current_x += distance_x
     current_y += distance_y
     return current_x, current_y
-
+'''
 def main():
     shelf_label, box_number, barcode_type, destination = get_user_input()
     current_x, current_y = move_robot_to_box(shelf_label, box_number, barcode_type)
-    move_box_to_destination(current_x, current_y, destination)
+    #move_box_to_destination(current_x, current_y, destination)
 
 main()
 
