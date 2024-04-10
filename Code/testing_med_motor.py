@@ -6,8 +6,6 @@ from ev3dev2.sound import Sound
 import time
 from ev3dev2.motor import OUTPUT_A, OUTPUT_B, MoveTank, SpeedRPS, follow_for_ms
 
-from PID_movement import straight, distance_to_time
-
 
 def med(sec):
     sound = Sound()
