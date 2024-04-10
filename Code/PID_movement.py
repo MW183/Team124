@@ -114,7 +114,7 @@ def barcode_reading(barcode_type, near = False):
             disp.update()
             sleep(5)
     return False
-'''
+
 
 def move_robot_to_box(shelf_label, box_number, barcode_type):
     near = False
@@ -142,19 +142,22 @@ def move_robot_to_box(shelf_label, box_number, barcode_type):
 
     # Final adjustment
     turn_right() if is_on_top(box_number) else turn_left()
-    
+    return current_x, current_y   
     #Here we need to add in something to read the barcode, grab the box, and then turn in the opposite direction so we are oriented facing in the +y direction
-    '''straight(350)
+'''   
+    straight(350)
     if (barcode_reading(barcode_type, True)):
         print('barcode_match')
     else:
         print('barcode_no_match')
-
+    
+    
     #reorient up IT IS REPEATED TWICE ON PURPOSE
     if is_on_top(box_number): 
         turn_around
-    '''
-    return current_x, current_y
+'''    
+    
+   
 '''def move_box_to_destination(current_x, current_y, destination):
     target_x, target_y = get_end_coordinates(destination)
     distance_x, distance_y = target_x - current_x, target_y - current_y
