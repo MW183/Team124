@@ -39,21 +39,19 @@ def turn_around():
 def main():
     box_number = int(input("Enter the box number for Shelf A1 >> "))
     target_x = (16 + (6 * (box_number - 7))) * conversion_factor
-    target_y = 16 * conversion_factor
-    #x_offset = add measurement to midpoint for x
-    #y_offset = add measurement to midpoint for y 
+    target_y = 24 * conversion_factor
     
-    current_x = (6 * conversion_factor) #+ x_offset
-    current_y = (-6 * conversion_factor) #+ y_offset
+    current_x = (4 * conversion_factor) 
+    current_y = (-4 * conversion_factor)
     
     distance_x = target_x - current_x
     distance_y = target_y - current_y
     
-    straight(distance_x)
-    turn_right
     straight(distance_y)
+    turn_right()
+    straight(distance_x)
     sleep(5)
-    
+'''    
     current_x = target_x
     current_y = target_y
     
@@ -66,5 +64,6 @@ def main():
     straight(distance_x)
     turn_right()
     straight(distance_y)
+'''
 main()
     

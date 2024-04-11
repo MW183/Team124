@@ -34,26 +34,23 @@ def turn_right():
     tank.turn_right(SpeedRPS(RPS), 90)
 
 def turn_around():
+    tank.gyro.reset()
     tank.turn_right(SpeedRPS(RPS), 180)
     
 def main():
-    target_x = 6 * conversion_factor
-    target_y = 6 * conversion_factor
-    #x_offset = add measurement to midpoint for x
-    #y_offset = add measurement to midpoint for y 
-    
-    current_x = (102 * conversion_factor) #+ x_offset
-    current_y = (-6 * conversion_factor) #+ y_offset
-    
+    target_x = 4 * conversion_factor
+    target_y = 12 * conversion_factor    
+    current_x = (102 * conversion_factor)
+    current_y = (-6 * conversion_factor) 
     distance_x = target_x - current_x
     distance_y = target_y - current_y
     
-    turn_around
+    turn_around()
     straight(distance_y)
-    turn_left
-    straight(distance_x)
-    turn_left
-    straight(-1 * distance_y)
+    turn_left()
+    straight(-1 * distance_x)
+    turn_left()
+    straight(distance_y/2)
     
 main()
     
