@@ -13,18 +13,12 @@ disp = Display()
 RPS = 1  # rotations per second
 conversion_factor = 25.4 #mm to in
 
-hold_position = True 
 
-def motor_control():
-    global hold_position
+def motor_control(degrees):
     med = MediumMotor(OUTPUT_D)
-    med.on_for_degrees(SpeedPercent(100), -60)
+    med.on_for_degrees(SpeedPercent(100), degrees)
     med.wait_while('running')
-    
-    while hold_position:
-            med.on(SpeedPerecent(100))
-    
-    med.stop()
+
 
 def straight(distance):
     circumference = 6.92614 *conversion_factor  # Wheel circumference in mm
@@ -62,7 +56,7 @@ def barcode_reading(barcode_type, isRight):
             color += str(1)
         elif (color_sensor.reflected_light_intensity >15):
             color += str(6)
-        print(color)
+    print(color)
     
     if barcode_dict[barcode_type] == color:
         disp.text_pixels("This is the box", x=0, y=64)
@@ -76,42 +70,20 @@ def barcode_reading(barcode_type, isRight):
         return False
 
 def main():
-    box_number = 9
-    isRight = True
-    while True:
-        barcode = int(input("Enter the corresponding number for the barcode type >> "))
-        if barcode in range(1, 5):
-            break
-        else:
-            print("Wrong input, try again!")
-    current_x = (0 * conversion_factor) 
-    target_x = (19) * conversion_factor
-    
-    
-    straight(distance= target_x - current_x)
-    isSuccess = barcode_reading(barcode, isRight)
-    tries = 1
-    
-    while not (isSuccess) and (tries <= 3):
-        straight(distance = 2 * conversion_factor)
-        tries += 1
-        isSuccess = barcode_reading(barcode, isRight)
-        sleep(2)
+    barcode = int(input("Enter the corresponding number for the barcode type >> "))
+    distance = 19*conversion_factor
+    straight(distance)
+    isSuccess = barcode_reading(barcode, isRight = True)
+    isSuccess = True
     if isSuccess:
         turn_right()
-        #starting motor control in a seperate thread
-        motor_thread = threading.Thread(target = motor_control)
-        motor_thread.start()        
+        sleep(2)
+        motor_control(150)
+        sleep(2)
         turn_left()
-    
-    #move to drop-off
-    straight(distance = (21 * conversion_factor))
-    #execute once box no longer needs to be held
-    global hold_position
-    hold_position = False
-    motor_thread.join()
-    
-    
-    
+        sleep(2)
+    distance = 21 * conversion_factor
+    straight(distance)
+    motor_control(-150)    
 main()
     
