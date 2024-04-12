@@ -54,9 +54,9 @@ def get_box_coordinates(shelf_label, box_number):
 
 def adjust_coordinates(x, y, box_number):
     if is_on_top(box_number):
-        return x, (y + (3 )), True
+        return x, (y + (3 ))
     else:
-        return x, (y - (3 )), False
+        return x, (y - (3 ))
 def lift():
     med.on_for_degrees(SpeedPercent(100), 250)
 def drop():
@@ -138,8 +138,8 @@ def get_user_input():
 
 def main():
     shelf_label, box_number, barcode, destination = get_user_input()
-    target_x, target_y = get_box_coordinates(shelf_label, box_number)
-    target_x, target_y = adjust_coordinates(target_x, target_y, box_number)
+    x, y = get_box_coordinates(shelf_label, box_number)
+    target_x, target_y = adjust_coordinates(x, y, box_number)
     start_x = 4 
     start_y = -4 
     distance_x = target_x - start_x
