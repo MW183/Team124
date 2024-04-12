@@ -70,7 +70,7 @@ def barcode_reading(barcode_type):
         return False
 
 def main():
-    barcode = 2 #int(input("Enter the corresponding number for the barcode type >> "))
+    barcode = int(input("Enter the corresponding number for the barcode type >> "))
     distance = 19*conversion_factor
     straight(distance)
     isSuccess = barcode_reading(barcode)

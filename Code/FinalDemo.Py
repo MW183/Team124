@@ -82,8 +82,8 @@ def turn_around():
 def barcode_reading(barcode_number):
     barcode_dict = {1: '1666', 2: '1616', 3: '1166', 4: '1661'}
     color = ''
-    for _ in range(4):
-        straight(-0.75 )
+    for _ in range(1, 5):
+        straight(-0.75)
         color += '1' if color_sensor.reflected_light_intensity <= 15 else '6'
         sleep(0.5)
     print(color)
