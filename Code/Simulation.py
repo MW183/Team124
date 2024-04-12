@@ -39,6 +39,11 @@ def get_box_coordinates(shelf_label, box_number):
     print(f"{round(x_start_box, 2)}, {round(y_edge_box, 2)}")
     return x_start_box, y_edge_box
 
+def adjust_coordinates(x, y, box_number):
+    if is_on_top(box_number):
+        return x, (y + (3 * conversion_factor)), True
+    else:
+        return x, (y - (3 * conversion_factor)), False
 
 def main():
     rawinput = input("Enter shelf number, box number, barcode, and destination separated by an underscore (I.E. A1_1, 1, C) >> ")
@@ -55,5 +60,6 @@ def main():
     # Converting box_number to int
     box_number = int(box_number)
     
-    get_box_coordinates(shelf_number, box_number)    
+    get_box_coordinates(shelf_number, box_number)
+        
 main()

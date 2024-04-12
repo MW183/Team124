@@ -125,7 +125,7 @@ def try_adjustments(barcode, adjustments):
         if barcode_reading(barcode):
             return True
         straight(-adjust)
-    return false
+    return False
 
 def get_user_input():
     rawinput = input("Enter shelf number, box number, barcode, and destination separated by an underscore (I.E. A1_1, 1, C) >> ")
