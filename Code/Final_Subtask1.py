@@ -51,7 +51,7 @@ def main():
     turn_right()
     straight(distance_x)
     sleep(5)
-'''    
+   
     current_x = target_x
     current_y = target_y
     
@@ -64,6 +64,6 @@ def main():
     straight(distance_x)
     turn_right()
     straight(distance_y)
-'''
+    
 main()
     
