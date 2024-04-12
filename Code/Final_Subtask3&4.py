@@ -11,19 +11,20 @@ tank.gyro.calibrate()
 color_sensor = ColorSensor()
 disp = Display()
 RPS = 1  # rotations per second
-conversion_factor = 25.4 #mm to in
 med = MediumMotor(OUTPUT_D)
 
 def motor_control(degrees):
-    med.on_for_degrees(SpeedPercent(100), degrees)
+    med.on_for_degrees(SpeedPercent(50), degrees)
     med.wait_while('running')
+
+
 
 
 def straight(distance):
     RPS_factor = 1
     if distance < 0:
         RPS_factor = -1
-    circumference = 6.92614 *conversion_factor  # Wheel circumference in mm
+    circumference = 6.92614   # Wheel circumference in mm
     rotations = abs(distance) / circumference
     time = 1000 * rotations
     
@@ -48,7 +49,8 @@ def barcode_reading(barcode_type):
     barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
     color = ''
     for i in range(1,5):
-        straight(distance = (-0.75 * conversion_factor))
+        straight(distance = -0.75)
+        sleep(0.5)
         if (color_sensor.reflected_light_intensity <= 15):
             color += str(1)
         elif (color_sensor.reflected_light_intensity >15):
@@ -71,34 +73,20 @@ def barcode_reading(barcode_type):
 
 def main():
     barcode = int(input("Enter the corresponding number for the barcode type >> "))
-    distance = 19*conversion_factor
+    distance = (17.5 )
     straight(distance)
-    isSuccess = barcode_reading(barcode)
-    tries = 1
-    adjustments = [-1.5, -1, -0.5, 0.5, 1]
-    while (not isSuccess) and (tries < 6):
-        
-        adjust_distance = adjustments[tries - 1] * conversion_factor
-        straight(adjust_distance)
-        isSuccess = barcode_reading(barcode)
-        if isSuccess:
-            break
-        else:
-            straight(1)
-            straight(-1 * adjust_distance)
-        tries += 1
-        
-    if (isSuccess) or (tries > 6):
-        turn_right()
-        straight(-2*conversion_factor)
-        motor_control(-60)
-        straight(3*conversion_factor)
-        sleep(1)
-        motor_control(250)
-        turn_left()
-        straight(21 * conversion_factor)
-        motor_control(-250)    
-        straight(-2*conversion_factor)
-        motor_control(60)
+    barcode_reading(barcode)
+    turn_right()
+    straight(-1)
+    motor_control(-60)
+    straight(3)
+    sleep(1)
+    motor_control(250)
+    straight(-2)
+    turn_left()
+    straight(21 )
+    motor_control(-250)    
+    straight(-2)
+    motor_control(60)
 main()
     
