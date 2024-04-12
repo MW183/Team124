@@ -84,6 +84,7 @@ def main():
         if isSuccess:
             break
         else:
+            straight(1)
             straight(-1 * adjust_distance)
         tries += 1
         
