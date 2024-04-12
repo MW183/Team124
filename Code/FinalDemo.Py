@@ -49,7 +49,7 @@ def get_box_coordinates(shelf_label, box_number):
     # The accessible edge y coordinate (bottom or top edge of the box)
     y_edge_box = y_start_shelf + shelf_y if is_on_top(box_number) else y_start_shelf
 
-    print(f"{round(x_start_box, 2)}, {round(y_edge_box, 2)}")
+    #print(f"{round(x_start_box, 2)}, {round(y_edge_box, 2)}")
     return x_start_box, y_edge_box
 
 def adjust_coordinates(x, y, box_number):
@@ -139,6 +139,7 @@ def get_user_input():
 def main():
     shelf_label, box_number, barcode, destination = get_user_input()
     target_x, target_y = get_box_coordinates(shelf_label, box_number)
+    target_x, target_y = adjust_coordinates(target_x, target_y, box_number)
     start_x = 4 
     start_y = -4 
     distance_x = target_x - start_x
@@ -155,7 +156,7 @@ def main():
         
     handle_box(box_number)    
     
-    final_x, final_y =  get_destination_coordinates()
+    final_x, final_y =  get_destination_coordinates(destination)
         
     current_x = target_x
     current_y = target_y + 3 if is_on_top(box_number) else target_y - 3
