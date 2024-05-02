@@ -49,7 +49,7 @@ def barcode_reading(barcode_type):
     barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
     color = ''
     for i in range(1,5):
-        straight(distance = -0.75)
+        straight(distance = -0.6)
         sleep(0.5)
         if (color_sensor.reflected_light_intensity <= 15):
             color += str(1)
@@ -73,7 +73,7 @@ def barcode_reading(barcode_type):
 
 def main():
     barcode = int(input("Enter the corresponding number for the barcode type >> "))
-    distance = (17.5 )
+    distance = (17.5)
     straight(distance)
     barcode_reading(barcode)
     turn_right()
@@ -81,11 +81,11 @@ def main():
     motor_control(-60)
     straight(3)
     sleep(1)
-    motor_control(250)
+    motor_control(150)
     straight(-2)
     turn_left()
     straight(21 )
-    motor_control(-250)    
+    motor_control(-150)    
     straight(-2)
     motor_control(60)
 main()

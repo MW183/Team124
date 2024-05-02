@@ -54,9 +54,9 @@ def get_box_coordinates(shelf_label, box_number):
 
 def adjust_coordinates(x, y, box_number):
     if is_on_top(box_number):
-        return x, (y + (3 ))
+        return x + 3, (y + (3 ))
     else:
-        return x, (y - (3 ))
+        return x + 3, (y - (3 ))
 def lift():
     med.on_for_degrees(SpeedPercent(100), 250)
 def drop():
@@ -79,20 +79,27 @@ def turn_right():
 def turn_around():
     tank.turn_right(SpeedRPS(RPS), 180)
 
-def barcode_reading(barcode_number):
-    barcode_dict = {1: '1666', 2: '1616', 3: '1166', 4: '1661'}
+def barcode_reading(barcode_type):
+    barcode_dict = {1:'1666', 2:'1616', 3:'1166', 4:'1661'}
     color = ''
-    for _ in range(1, 5):
-        straight(-0.75)
-        color += '1' if color_sensor.reflected_light_intensity <= 15 else '6'
+    for i in range(1,5):
+        straight(distance = -0.6)
+        sleep(0.5)
+        if (color_sensor.reflected_light_intensity <= 15):
+            color += str(1)
+        elif (color_sensor.reflected_light_intensity >15):
+            color += str(6)
         sleep(0.5)
     print(color)
-    if barcode_dict[barcode_number] == color:
+    
+    if barcode_dict[barcode_type] == color:
+        print("This is the box")
         disp.text_pixels("This is the box", x=0, y=64)
         disp.update()
         sleep(5)
         return True
     else:
+        print("This is not the box")
         disp.text_pixels("This is not the box", x=0, y=64)
         disp.update()
         sleep(3)
@@ -149,11 +156,7 @@ def main():
     turn_right()
     straight(distance_x)
     
-    isSuccess = barcode_reading(barcode)
-    if not isSuccess:
-        adjustments = [-1.5, 1.5, -1, 1, -0.5, 0.5]
-        isSuccess = try_adjustments(barcode, adjustments)
-        
+    barcode_reading(barcode)
     handle_box(box_number)    
     
     final_x, final_y =  get_destination_coordinates(destination)
